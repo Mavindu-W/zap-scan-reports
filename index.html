@@ -3,9 +3,12 @@ import os
 # Path to the reports folder
 REPORTS_FOLDER = '/home/mavindu/Desktop/test/zap-scan-reports/reports/'
 
-# Function to update index.html
+# Function to update index.html with a beautiful UI
 def update_index_html():
+    # Define the path to the index.html
     index_html_path = os.path.join(REPORTS_FOLDER, '../index.html')
+    
+    # List to hold all reports found
     reports = []
 
     # Scan the reports directory for folders and HTML files
@@ -16,75 +19,92 @@ def update_index_html():
                 if file.endswith('.html'):
                     reports.append((folder, file))
 
-    # Generate HTML content
+    # HTML content for the report page
     html_content = """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ZAP Scan Reports</title>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-            }}
-            header {{
-                background-color: #333;
-                color: white;
-                text-align: center;
-                padding: 1em 0;
-            }}
-            h1 {{
-                margin: 0;
-                font-size: 2.5em;
-            }}
-            .container {{
-                max-width: 900px;
-                margin: 20px auto;
-                padding: 20px;
-                background-color: white;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }}
-            a {{
-                text-decoration: none;
-                color: #333;
-                display: block;
-                margin: 10px 0;
-                padding: 10px;
-                border-radius: 5px;
-                background-color: #eaeaea;
-                transition: background-color 0.3s ease;
-            }}
-            a:hover {{
-                background-color: #ccc;
-            }}
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1>ZAP Scan Reports</h1>
-        </header>
-        <div class="container">
-            <h2>Available Reports</h2>
-            <ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP ZAP Scan Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #eee;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+        }
+        li:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>OWASP ZAP Scan Reports</h1>
+    </header>
+    <div class="container">
+        <h2>Available Reports</h2>
+        <ul>
     """
 
+    # Add each report to the HTML
     for folder, file in reports:
-        html_content += f'<li><a href="reports/{folder}/{file}">{folder}: {file}</a></li>\n'
+        html_content += f'<li><a href="reports/{folder}/{file}" target="_blank">{folder}: {file}</a></li>\n'
 
+    # Close HTML tags
     html_content += """
-            </ul>
-        </div>
-    </body>
-    </html>
+        </ul>
+    </div>
+</body>
+</html>
     """
 
-    # Write to index.html
+    # Write the HTML content to index.html
     with open(index_html_path, 'w') as f:
         f.write(html_content)
-
+    
     print(f"Updated index.html at {index_html_path}")
+
+# Call the function to generate index.html
+update_index_html()
 
