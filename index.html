@@ -1,110 +1,86 @@
-import os
-
-# Path to the reports folder
-REPORTS_FOLDER = '/home/mavindu/Desktop/test/zap-scan-reports/reports/'
-
-# Function to update index.html with a beautiful UI
-def update_index_html():
-    # Define the path to the index.html
-    index_html_path = os.path.join(REPORTS_FOLDER, '../index.html')
-    
-    # List to hold all reports found
-    reports = []
-
-    # Scan the reports directory for folders and HTML files
-    for folder in os.listdir(REPORTS_FOLDER):
-        folder_path = os.path.join(REPORTS_FOLDER, folder)
-        if os.path.isdir(folder_path):
-            for file in os.listdir(folder_path):
-                if file.endswith('.html'):
-                    reports.append((folder, file))
-
-    # HTML content for the report page
-    html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OWASP ZAP Scan Reports</title>
+    <title>ZAP Scan Reports</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #121212;
+            color: #ffffff;
             margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
             padding: 20px;
         }
         h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        h2 {
             text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+            color: #ffffff;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        li {
-            background-color: #eee;
-            margin: 10px 0;
+        th, td {
             padding: 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            text-align: left;
+            border-bottom: 1px solid #333;
         }
-        li a {
+        th {
+            background-color: #333;
+        }
+        td {
+            background-color: #222;
+        }
+        tr:hover {
+            background-color: #555;
+        }
+        a {
+            color: #ffffff;
             text-decoration: none;
-            color: #333;
-            font-size: 1.2em;
         }
-        li:hover {
-            background-color: #ddd;
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #121212;
+            color: #ffffff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>OWASP ZAP Scan Reports</h1>
-    </header>
-    <div class="container">
-        <h2>Available Reports</h2>
-        <ul>
-    """
 
-    # Add each report to the HTML
-    for folder, file in reports:
-        html_content += f'<li><a href="reports/{folder}/{file}" target="_blank">{folder}: {file}</a></li>\n'
+<h1>OWASP ZAP Scan Reports</h1>
 
-    # Close HTML tags
-    html_content += """
-        </ul>
-    </div>
+<table>
+    <thead>
+        <tr>
+            <th>Report Name</th>
+            <th>Last Modified</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- List of files -->
+        <tr>
+            <td><a href="2024-Week-39/index.html">2024-Week-39</a></td>
+            <td>08:08:44 AM</td>
+        </tr>
+        <tr>
+            <td><a href="2024-Week-40/index.html">2024-Week-40</a></td>
+            <td>04:11:29 AM</td>
+        </tr>
+    </tbody>
+</table>
+
+<footer>
+    ZAP Scan Reports | Automated Reports | © 2024
+</footer>
+
 </body>
 </html>
-    """
-
-    # Write the HTML content to index.html
-    with open(index_html_path, 'w') as f:
-        f.write(html_content)
-    
-    print(f"Updated index.html at {index_html_path}")
-
-# Call the function to generate index.html
-update_index_html()
 
